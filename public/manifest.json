@@ -1,0 +1,10 @@
+{
+  "name": "Forge",
+  "short_name": "Forge",
+  "description": "Cosmic AI app generator platform.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050508",
+  "theme_color": "#7C3AED",
+  "icons": []
+}

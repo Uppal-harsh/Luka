@@ -1,0 +1,39 @@
+import type { Metadata } from "next";
+import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono } from "next/font/google";
+import "./globals.css";
+import type { ReactNode } from "react";
+
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-display"
+});
+
+const body = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-body"
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono"
+});
+
+export const metadata: Metadata = {
+  title: "Forge",
+  description: "A cosmic AI app generator for building full-stack apps from JSON.",
+  manifest: "/manifest.json"
+};
+
+export default function RootLayout({
+  children
+}: Readonly<{
+  children: ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={`${display.variable} ${body.variable} ${mono.variable} font-body`}>
+        {children}
+      </body>
+    </html>
+  );
+}
