@@ -14,7 +14,7 @@ const variantStyles: Record<Variant, string> = {
   ghost: "bg-transparent text-[color:var(--text-primary)] hover:bg-[color:var(--bg-surface-hover)]",
   danger: "bg-red-500/90 text-white hover:bg-red-500",
   outline:
-    "border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] text-[color:var(--text-primary)] hover:border-brand-gold/50 hover:bg-[color:var(--bg-surface-hover)]"
+    "border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] text-[color:var(--text-primary)] hover:border-[color:var(--border-active)] hover:bg-[color:var(--bg-surface-hover)]"
 };
 
 const sizeStyles: Record<Size, string> = {
