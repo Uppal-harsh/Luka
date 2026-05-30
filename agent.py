@@ -19,6 +19,7 @@ import os
 import re
 import sys
 import textwrap
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -32,6 +33,7 @@ FALLBACK_MODELS = [
     "openai/gpt-oss-120b:free",
     "openai/gpt-oss-20b:free",
 ]
+MAX_ATTEMPTS_PER_MODEL = 3
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_ROOT = BASE_DIR / "generated-sites"
 DEFAULT_SITE_TITLE = "LUKA Generated Site"
@@ -134,6 +136,29 @@ def load_local_env() -> None:
     load_env_file(BASE_DIR / ".env.local")
 
 
+def extract_retry_after_seconds(body: str) -> float | None:
+    if not body:
+        return None
+
+    try:
+        payload = json.loads(body)
+    except json.JSONDecodeError:
+        return None
+
+    error = payload.get("error", {})
+    metadata = error.get("metadata", {})
+    for key in ("retry_after_seconds", "retry_after_seconds_raw"):
+        value = metadata.get(key)
+        if value is None:
+            continue
+        try:
+            return max(0.5, float(value))
+        except (TypeError, ValueError):
+            continue
+
+    return None
+
+
 def build_messages(user_prompt: str) -> list[dict[str, Any]]:
     system_prompt = textwrap.dedent(
         """
@@ -215,31 +240,51 @@ def call_openrouter(
             method="POST",
         )
 
-        try:
-            with urlopen(request, timeout=120) as response:
-                raw = response.read().decode("utf-8")
-        except HTTPError as exc:
-            body = exc.read().decode("utf-8", errors="replace") if exc.fp else ""
-            error_text = body or exc.reason or "Unknown OpenRouter error"
+        attempts = 0
+        while attempts < MAX_ATTEMPTS_PER_MODEL:
+            attempts += 1
 
-            if exc.code == 404 and "model not found" in error_text.lower():
+            try:
+                with urlopen(request, timeout=120) as response:
+                    raw = response.read().decode("utf-8")
+            except HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="replace") if exc.fp else ""
+                error_text = body or exc.reason or "Unknown OpenRouter error"
+
+                if exc.code == 429:
+                    retry_after = extract_retry_after_seconds(body)
+                    if retry_after is None:
+                        retry_after = min(30.0, 2.0 ** attempts)
+
+                    last_error = RuntimeError(
+                        f"{candidate_model} was rate-limited (attempt {attempts}/{MAX_ATTEMPTS_PER_MODEL}); "
+                        f"retrying in {retry_after:.1f}s: {error_text}"
+                    )
+                    time.sleep(retry_after)
+                    continue
+
+                if exc.code == 404 and "model not found" in error_text.lower():
+                    last_error = RuntimeError(
+                        f"{candidate_model} was unavailable: {error_text}"
+                    )
+                    break
+
+                raise RuntimeError(
+                    f"OpenRouter request failed for {candidate_model} ({exc.code}): {error_text}"
+                ) from exc
+            except URLError as exc:
                 last_error = RuntimeError(
-                    f"{candidate_model} was unavailable: {error_text}"
+                    f"OpenRouter request failed for {candidate_model}: {exc.reason}"
                 )
-                continue
+                break
 
-            raise RuntimeError(
-                f"OpenRouter request failed for {candidate_model} ({exc.code}): {error_text}"
-            ) from exc
-        except URLError as exc:
-            last_error = RuntimeError(f"OpenRouter request failed for {candidate_model}: {exc.reason}")
-            continue
-
-        data = json.loads(raw)
-        try:
-            return data["choices"][0]["message"]["content"]
-        except (KeyError, IndexError, TypeError) as exc:
-            raise RuntimeError(f"Unexpected OpenRouter response shape from {candidate_model}: {raw[:1000]}") from exc
+            data = json.loads(raw)
+            try:
+                return data["choices"][0]["message"]["content"]
+            except (KeyError, IndexError, TypeError) as exc:
+                raise RuntimeError(
+                    f"Unexpected OpenRouter response shape from {candidate_model}: {raw[:1000]}"
+                ) from exc
 
     if last_error is not None:
         raise RuntimeError(

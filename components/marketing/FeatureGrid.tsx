@@ -32,7 +32,7 @@ export function FeatureGrid() {
             Designed for builders who want motion, structure, and speed.
           </h2>
         </div>
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -45,7 +45,7 @@ export function FeatureGrid() {
               >
                 <Card className="h-full">
                   <Icon className="h-6 w-6 text-brand-gold" />
-                  <h3 className="mt-5 font-display text-2xl font-semibold text-[color:var(--text-primary)]">{feature.title}</h3>
+                  <h3 className="mt-5 font-display text-xl font-semibold text-[color:var(--text-primary)] sm:text-2xl">{feature.title}</h3>
                   <p className="mt-3 text-sm leading-7 text-[color:var(--text-secondary)]">{feature.copy}</p>
                 </Card>
               </motion.div>

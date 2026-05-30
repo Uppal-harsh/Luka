@@ -41,7 +41,29 @@ export default function DocsPage() {
         </div>
 
         <div className="mt-12">
-          <ScrollStack className="space-y-6" itemDistance={120} itemStackDistance={28} baseScale={0.88}>
+          <div className="space-y-4 lg:hidden">
+            {steps.map((step, index) => (
+              <div
+                key={step.number}
+                className="overflow-hidden rounded-[2rem] border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] px-5 py-5 shadow-[0_14px_40px_rgba(0,0,0,0.08)]"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[color:var(--border-subtle)] bg-brand-gold/10 text-base font-medium text-brand-gold">
+                    {step.number}
+                  </div>
+                  <div className="min-w-0">
+                    <h2 className="text-xl font-semibold text-[color:var(--text-primary)]">{step.title}</h2>
+                    <p className="mt-2 text-sm leading-7 text-[color:var(--text-secondary)]">{step.copy}</p>
+                    <p className="mt-3 text-xs uppercase tracking-[0.28em] text-[color:var(--text-muted)]">
+                      Step {index + 1}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <ScrollStack className="hidden space-y-6 lg:block" itemDistance={120} itemStackDistance={28} baseScale={0.88}>
             {steps.map((step, index) => (
               <ScrollStackItem key={step.number}>
                 <div className="flex min-h-[180px] flex-col justify-between gap-6 bg-[color:var(--bg-surface)] px-6 py-6 sm:flex-row sm:items-center sm:px-8">

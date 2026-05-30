@@ -26,19 +26,19 @@ export default function PricingPage() {
   return (
     <div className="min-h-screen bg-[color:var(--bg-base)] text-[color:var(--text-primary)] transition-colors duration-300">
       <NavBar />
-      <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm uppercase tracking-[0.42em] text-brand-gold/80">Pricing</p>
-          <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-[color:var(--text-primary)] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-4 font-display text-3xl font-semibold tracking-tight text-[color:var(--text-primary)] sm:text-5xl lg:text-6xl">
             Straightforward pricing for teams building with LUKA.
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-[color:var(--text-secondary)] sm:text-lg">
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[color:var(--text-secondary)] sm:text-base sm:leading-8">
             Start with a clean workspace, then scale into automation, exports, and collaboration when you need
             them. No clutter. No confusing tiers.
           </p>
         </div>
 
-        <div className="mx-auto mt-14 grid max-w-5xl gap-5 md:grid-cols-2">
+        <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2">
           {plans.map((plan) => (
             <Card
               key={plan.name}
@@ -49,11 +49,11 @@ export default function PricingPage() {
               glow={plan.featured}
             >
               <div className={`h-2 bg-gradient-to-r ${plan.accent}`} />
-              <div className="flex h-full flex-col justify-between p-8 sm:p-10">
+              <div className="flex h-full flex-col justify-between p-6 sm:p-8 sm:p-10">
                 <div>
-                  <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div>
-                      <h2 className="font-display text-3xl font-semibold tracking-tight">{plan.name}</h2>
+                      <h2 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">{plan.name}</h2>
                       <p className="mt-2 max-w-md text-sm leading-7 text-[color:var(--text-secondary)]">
                         {plan.note}
                       </p>
@@ -66,8 +66,8 @@ export default function PricingPage() {
                     ) : null}
                   </div>
 
-                  <div className="mt-8 flex items-end gap-2">
-                    <div className="font-display text-5xl font-semibold tracking-tight">{plan.price}</div>
+                  <div className="mt-7 flex items-end gap-2 sm:mt-8">
+                    <div className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">{plan.price}</div>
                     <div className="pb-1 text-sm text-[color:var(--text-muted)]">/month</div>
                   </div>
 
@@ -87,7 +87,7 @@ export default function PricingPage() {
                   </ul>
                 </div>
 
-                <div className="mt-10">
+                <div className="mt-8 sm:mt-10">
                   <Button
                     href="/signup"
                     size="lg"

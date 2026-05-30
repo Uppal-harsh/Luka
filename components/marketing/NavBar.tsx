@@ -15,9 +15,9 @@ const navItems = [
 export function NavBar() {
   return (
     <header className="sticky top-0 z-50 border-b border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] backdrop-blur-2xl shadow-[0_8px_24px_rgba(0,0,0,0.04)] dark:bg-black/80 dark:shadow-none">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <LukaLogo />
+          <LukaLogo responsiveWordmark />
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -32,7 +32,7 @@ export function NavBar() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="hidden items-center gap-2 rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] px-3 py-2 text-xs text-[color:var(--text-secondary)] lg:flex">
             <BadgeCheck className="h-4 w-4 text-brand-gold" />
             Private beta
@@ -41,7 +41,7 @@ export function NavBar() {
           <Button href="/docs" size="sm" variant="outline" className="hidden sm:inline-flex">
             Docs
           </Button>
-          <Button href="/apps/new" size="sm">
+          <Button href="/apps/new" size="sm" className="px-4 sm:px-4">
             Build
             <ArrowRight className="h-4 w-4" />
           </Button>

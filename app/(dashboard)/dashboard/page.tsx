@@ -36,12 +36,12 @@ const workflowSteps = [
 
 export default function DashboardPage() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <Card className="mb-8 overflow-hidden">
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p className="text-sm uppercase tracking-[0.28em] text-brand-gold/70">Main workflow</p>
-            <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight">
+            <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
               Build from a JSON config, preview instantly, and save a local project.
             </h1>
             <p className="mt-4 max-w-2xl text-sm leading-7 text-[color:var(--text-secondary)] sm:text-base">
@@ -72,11 +72,11 @@ export default function DashboardPage() {
         </div>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat) => (
           <Card key={stat.label}>
             <p className="text-sm text-[color:var(--text-secondary)]">{stat.label}</p>
-            <div className="mt-3 text-4xl font-semibold">{stat.value}</div>
+            <div className="mt-3 text-3xl font-semibold sm:text-4xl">{stat.value}</div>
           </Card>
         ))}
       </div>
@@ -85,16 +85,16 @@ export default function DashboardPage() {
         <div className="mb-4 flex items-center justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Recent apps</p>
-            <h1 className="mt-2 font-display text-3xl font-semibold">Builds in progress</h1>
+            <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">Builds in progress</h1>
           </div>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {apps.map((app) => (
             <Card key={app.name} className="space-y-4">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h2 className="font-display text-2xl font-semibold">{app.name}</h2>
+                  <h2 className="font-display text-xl font-semibold sm:text-2xl">{app.name}</h2>
                   <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{app.description}</p>
                 </div>
                 <Badge variant={app.status}>{app.status}</Badge>

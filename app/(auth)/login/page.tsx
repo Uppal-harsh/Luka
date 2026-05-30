@@ -11,7 +11,7 @@ export default async function LoginPage({
   const message = resolvedSearchParams.message;
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center px-4 py-8 sm:py-12">
       <LoginPanel next={next} initialError={error ? message ?? "Sign in failed." : undefined} />
     </div>
   );

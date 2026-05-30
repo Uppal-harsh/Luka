@@ -15,8 +15,8 @@ export function LoginPanel({
   return (
     <Card className="w-full max-w-md">
       <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Login</p>
-      <h1 className="mt-3 font-display text-3xl font-semibold">Welcome back</h1>
-      <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
+      <h1 className="mt-3 font-display text-2xl font-semibold sm:text-3xl">Welcome back</h1>
+      <p className="mt-2 text-sm leading-6 text-[color:var(--text-secondary)]">
         Sign in with Google to continue building generated apps.
       </p>
 

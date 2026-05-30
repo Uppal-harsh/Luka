@@ -179,13 +179,13 @@ export function AgentWorkspace() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
       <div className="mx-auto max-w-3xl">
         <p className="text-sm uppercase tracking-[0.32em] text-brand-gold/70">Agent</p>
-        <h1 className="mt-3 font-display text-4xl font-semibold tracking-tight text-[color:var(--text-primary)] sm:text-5xl">
+        <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight text-[color:var(--text-primary)] sm:text-5xl">
           Paste JSON, run the agent, and inspect the generated site in place.
         </h1>
-        <p className="mt-4 max-w-2xl text-base leading-8 text-[color:var(--text-secondary)] sm:text-lg">
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-[color:var(--text-secondary)] sm:text-base sm:leading-8">
           Drop in a JSON config, press Run or <span className="font-medium text-[color:var(--text-primary)]">Ctrl+Enter</span>, and LUKA will save a local project with <code className="rounded bg-[color:var(--bg-surface-hover)] px-1.5 py-0.5">index.html</code>, <code className="rounded bg-[color:var(--bg-surface-hover)] px-1.5 py-0.5">styles.css</code>, and <code className="rounded bg-[color:var(--bg-surface-hover)] px-1.5 py-0.5">script.js</code>.
         </p>
       </div>
@@ -215,7 +215,7 @@ export function AgentWorkspace() {
                 }
               }}
               spellCheck={false}
-              className="min-h-[520px] w-full resize-y rounded-[1.25rem] border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] p-4 font-mono text-sm leading-7 text-[color:var(--text-primary)] outline-none placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--border-active)]"
+              className="min-h-[320px] w-full resize-y rounded-[1.25rem] border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] p-4 font-mono text-[13px] leading-6 text-[color:var(--text-primary)] outline-none placeholder:text-[color:var(--text-muted)] focus:border-[color:var(--border-active)] sm:min-h-[520px] sm:text-sm sm:leading-7"
               aria-label="JSON input"
             />
           </div>
@@ -284,7 +284,7 @@ export function AgentWorkspace() {
 
             {result ? (
               <div className="space-y-4">
-                <div className="rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] px-4 py-3">
+                  <div className="rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] px-4 py-3">
                   <p className="text-xs uppercase tracking-[0.24em] text-[color:var(--text-muted)]">
                     Project folder
                   </p>
@@ -316,7 +316,7 @@ export function AgentWorkspace() {
                     ))}
                   </div>
 
-                  <pre className="mt-4 max-h-[280px] overflow-auto rounded-[1.25rem] border border-[color:var(--border-subtle)] bg-black px-4 py-4 font-mono text-xs leading-6 text-slate-100">
+                  <pre className="mt-4 max-h-[240px] overflow-auto rounded-[1.25rem] border border-[color:var(--border-subtle)] bg-black px-4 py-4 font-mono text-[11px] leading-6 text-slate-100 sm:max-h-[280px] sm:text-xs">
                     <code>{activeContent}</code>
                   </pre>
                 </div>
@@ -353,7 +353,7 @@ export function AgentWorkspace() {
                 sandbox="allow-scripts allow-forms allow-modals"
               />
             ) : (
-              <div className="flex h-[520px] items-center justify-center rounded-[1.5rem] border border-dashed border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] text-sm text-[color:var(--text-muted)]">
+              <div className="flex h-[360px] items-center justify-center rounded-[1.5rem] border border-dashed border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] text-sm text-[color:var(--text-muted)] sm:h-[520px]">
                 Run the agent to render a live preview here.
               </div>
             )}

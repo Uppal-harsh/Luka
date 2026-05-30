@@ -37,9 +37,9 @@ const highlights = [
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden px-4 pt-12 sm:px-6 lg:px-8 lg:pt-16">
+    <section className="relative overflow-hidden px-4 pt-10 sm:px-6 lg:px-8 lg:pt-16">
       <div className="pointer-events-none absolute inset-0 grid-noise opacity-45" />
-      <div className="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] px-5 py-8 shadow-[0_30px_120px_rgba(0,0,0,0.10)] backdrop-blur-sm lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8 lg:py-10 dark:shadow-[0_30px_120px_rgba(0,0,0,0.35)]">
+      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] px-4 py-6 shadow-[0_30px_120px_rgba(0,0,0,0.10)] backdrop-blur-sm sm:px-5 sm:py-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-10 lg:px-8 lg:py-10 dark:shadow-[0_30px_120px_rgba(0,0,0,0.35)]">
         <motion.div
           className="relative z-10"
           variants={staggerContainer}
@@ -56,17 +56,17 @@ export function HeroSection() {
 
           <motion.h1
             variants={fadeUp}
-            className="font-display max-w-3xl text-5xl font-extrabold tracking-tight text-[color:var(--text-primary)] sm:text-6xl lg:text-7xl"
+            className="font-display max-w-3xl text-4xl font-extrabold leading-[0.96] tracking-tight text-[color:var(--text-primary)] text-balance sm:text-5xl lg:text-7xl"
           >
             Turn JSON into full-stack apps with a clean, professional workflow engine.
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-lg leading-8 text-[color:var(--text-secondary)]">
+          <motion.p variants={fadeUp} className="mt-5 max-w-2xl text-base leading-7 text-[color:var(--text-secondary)] sm:mt-6 sm:text-lg sm:leading-8">
             LUKA reads a config object and generates apps, APIs, database schema, preview screens,
             and deployment-ready exports. Define the product once, then iterate visually.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+          <motion.div variants={fadeUp} className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button href="/signup" size="lg">
               <WandSparkles className="h-4 w-4" />
               Start generating
@@ -77,7 +77,7 @@ export function HeroSection() {
             </Button>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="mt-10 grid gap-4 sm:grid-cols-3">
+          <motion.div variants={fadeUp} className="mt-9 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {highlights.map((item) => {
               const Icon = item.icon;
               return (
@@ -106,11 +106,11 @@ export function HeroSection() {
                 <span className="h-3 w-3 rounded-full bg-[#262933]" />
               </div>
             </div>
-            <div className="relative p-5">
+            <div className="relative p-4 sm:p-5">
               <div className="mb-4 flex items-center justify-between">
                 <div>
                   <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Config preview</p>
-                  <h2 className="mt-2 font-display text-2xl font-semibold text-[color:var(--text-primary)]">Task Manager</h2>
+                  <h2 className="mt-2 font-display text-xl font-semibold text-[color:var(--text-primary)] sm:text-2xl">Task Manager</h2>
                 </div>
                 <div className="rounded-full border border-brand-gold/20 bg-brand-gold/10 px-3 py-1 text-xs text-brand-gold">
                   Live preview
@@ -118,7 +118,7 @@ export function HeroSection() {
               </div>
 
               <motion.pre
-                className="animate-float overflow-auto rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] p-4 font-mono text-xs leading-6 text-[color:var(--text-secondary)]"
+                className="animate-float max-h-[220px] overflow-auto rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] p-3 font-mono text-[11px] leading-6 text-[color:var(--text-secondary)] sm:p-4 sm:text-xs"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.45 }}

@@ -5,11 +5,11 @@ import { Input } from "@/components/ui/Input";
 
 export default function SignupPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 py-12">
+    <div className="flex min-h-screen items-center justify-center px-4 py-8 sm:py-12">
       <Card className="w-full max-w-md">
         <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Signup</p>
-        <h1 className="mt-3 font-display text-3xl font-semibold">Create your LUKA account</h1>
-        <p className="mt-2 text-sm text-[color:var(--text-secondary)]">
+        <h1 className="mt-3 font-display text-2xl font-semibold sm:text-3xl">Create your LUKA account</h1>
+        <p className="mt-2 text-sm leading-6 text-[color:var(--text-secondary)]">
           Start with a free workspace and grow from there.
         </p>
 
