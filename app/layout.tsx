@@ -23,7 +23,12 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "LUKA",
   description: "A polished AI app generator platform for building full-stack apps from JSON.",
-  manifest: "/manifest.json"
+  manifest: "/manifest.json",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/favicon.png",
+    apple: "/apple-icon.png"
+  }
 };
 
 export default function RootLayout({
