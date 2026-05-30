@@ -230,6 +230,17 @@ It exchanges the Supabase OAuth `code` for a session and redirects the user to
 - Set the redirect URL to `https://your-domain.com/auth/callback`.
 - The login page uses Supabase OAuth with the Google provider and preserves the `next` route when redirecting back.
 
+### Deployment Checklist
+
+1. **Vercel env:** Add `NEXT_PUBLIC_SITE_URL=https://luka-azure.vercel.app` to your Vercel project environment variables (Production). Optionally set `NEXT_PUBLIC_APP_URL=https://luka-azure.vercel.app`.
+2. **Supabase redirects:** In Supabase Dashboard → Authentication → Settings → Redirect URLs add `https://luka-azure.vercel.app/auth/callback` (and keep `http://localhost:3000/auth/callback` for local dev if needed).
+3. **Supabase site URL:** In Supabase Authentication settings set `Site URL` to `https://luka-azure.vercel.app`.
+4. **Supabase env vars on Vercel:** Ensure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or `NEXT_PUBLIC_SUPABASE_ANON_KEY`) are set in Vercel. Do NOT expose `SUPABASE_SERVICE_ROLE_KEY` to the browser — only set it in server-only environment variables.
+5. **Redeploy:** After updating Vercel env vars, redeploy your Vercel preview/production build so the changes take effect.
+6. **Clear session:** Clear cookies or test in an incognito window when validating OAuth flows to avoid local session interfering with redirects.
+
+Following these steps ensures OAuth callbacks and built URLs use your deployed domain rather than `localhost`.
+
 ## Styling And Motion
 
 This scaffold uses a dark, premium visual language with:
