@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
     extend: {
@@ -10,15 +11,17 @@ module.exports = {
       },
       colors: {
         brand: {
-          violet: "#7C3AED",
-          "violet-bright": "#A855F7",
-          cyan: "#06B6D4"
+          gold: "#CCAA4B",
+          navy: "#262933",
+          gray: "#585858",
+          black: "#000000",
+          white: "#FFFFFF"
         },
         surface: "rgba(255, 255, 255, 0.04)"
       },
       boxShadow: {
-        "glow-violet": "0 0 30px rgba(124, 58, 237, 0.3)",
-        "glow-cyan": "0 0 30px rgba(6, 182, 212, 0.3)",
+        "glow-gold": "0 0 28px rgba(204, 170, 75, 0.28)",
+        "glow-gray": "0 0 24px rgba(88, 88, 88, 0.22)",
         card: "0 4px 24px rgba(0,0,0,0.4)"
       },
       animation: {

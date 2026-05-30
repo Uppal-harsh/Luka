@@ -1,7 +1,7 @@
-# Forge
+# LUKA
 
-Forge is a Next.js 14 starter for a metadata-driven AI app generator platform.
-The current scaffold is built around a "Cosmic Forge" design system and includes
+LUKA is a Next.js 14 starter for a metadata-driven AI app generator platform.
+The current scaffold is built around a premium dark design system and includes
 marketing pages, auth shells, dashboard routes, Supabase integration helpers, and
 backend migration files.
 
@@ -76,6 +76,12 @@ lib/
   supabase/
     client.ts
     server.ts
+
+utils/
+  supabase/
+    client.ts
+    server.ts
+    middleware.ts
 
 public/
   manifest.json
@@ -160,7 +166,8 @@ All environment files in this repo currently share the same starter values:
 | Variable | Purpose |
 | --- | --- |
 | `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Browser-safe Supabase anon key |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Browser-safe Supabase publishable key |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Legacy fallback if you are still using anon-key naming |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server-only admin key for privileged backend tasks |
 | `NEXT_PUBLIC_SITE_URL` | Base URL used for auth redirects and links |
 
@@ -217,6 +224,12 @@ The auth callback route is located at:
 It exchanges the Supabase OAuth `code` for a session and redirects the user to
 `/dashboard` after a successful sign-in.
 
+### Google sign-in
+
+- Enable the Google provider in your Supabase dashboard.
+- Set the redirect URL to `https://your-domain.com/auth/callback`.
+- The login page uses Supabase OAuth with the Google provider and preserves the `next` route when redirecting back.
+
 ## Styling And Motion
 
 This scaffold uses a dark, premium visual language with:
@@ -263,4 +276,3 @@ Still to be built:
 - Use ASCII text unless a file already requires Unicode.
 - Keep secrets out of git.
 - Update this README when the backend or route structure changes.
-

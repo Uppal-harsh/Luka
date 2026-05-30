@@ -6,9 +6,9 @@ export default function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-12">
       <Card className="w-full max-w-md">
-        <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">Signup</p>
-        <h1 className="mt-3 font-display text-3xl font-semibold">Create your Forge account</h1>
-        <p className="mt-2 text-sm text-slate-400">Start with a free workspace and grow from there.</p>
+        <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Signup</p>
+        <h1 className="mt-3 font-display text-3xl font-semibold">Create your LUKA account</h1>
+        <p className="mt-2 text-sm text-[color:var(--text-secondary)]">Start with a free workspace and grow from there.</p>
         <form className="mt-8 space-y-4">
           <Input type="text" placeholder="Full name" />
           <Input type="email" placeholder="Email address" />

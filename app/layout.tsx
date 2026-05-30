@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import type { ReactNode } from "react";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -19,8 +20,8 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Forge",
-  description: "A cosmic AI app generator for building full-stack apps from JSON.",
+  title: "LUKA",
+  description: "A polished AI app generator platform for building full-stack apps from JSON.",
   manifest: "/manifest.json"
 };
 
@@ -30,9 +31,9 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${body.variable} ${mono.variable} font-body`}>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

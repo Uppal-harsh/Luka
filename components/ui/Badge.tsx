@@ -4,10 +4,10 @@ import type { HTMLAttributes, ReactNode } from "react";
 type BadgeVariant = "live" | "draft" | "error" | "building";
 
 const variants: Record<BadgeVariant, string> = {
-  live: "bg-emerald-500/15 text-emerald-300 border-emerald-500/20",
-  draft: "bg-slate-500/15 text-slate-300 border-slate-500/20",
+  live: "bg-brand-gold/15 text-brand-gold border-brand-gold/20",
+  draft: "bg-white/5 text-slate-300 border-white/10",
   error: "bg-red-500/15 text-red-300 border-red-500/20",
-  building: "bg-amber-500/15 text-amber-300 border-amber-500/20"
+  building: "bg-brand-gray/15 text-brand-gray border-brand-gray/20"
 };
 
 export function Badge({

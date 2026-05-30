@@ -1,3 +1,5 @@
+'use client';
+
 import { Card } from "@/components/ui/Card";
 import { motion } from "framer-motion";
 import { Blocks, Github, Workflow } from "lucide-react";
@@ -25,8 +27,8 @@ export function FeatureGrid() {
     <section className="px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
-          <p className="text-sm uppercase tracking-[0.25em] text-cyan-200/70">Why Forge</p>
-          <h2 className="mt-2 font-display text-3xl font-semibold text-white sm:text-4xl">
+          <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Why LUKA</p>
+          <h2 className="mt-2 font-display text-3xl font-semibold text-[color:var(--text-primary)] sm:text-4xl">
             Designed for builders who want motion, structure, and speed.
           </h2>
         </div>
@@ -42,9 +44,9 @@ export function FeatureGrid() {
                 transition={{ duration: 0.45, delay: index * 0.08 }}
               >
                 <Card className="h-full">
-                  <Icon className="h-6 w-6 text-violet-300" />
-                  <h3 className="mt-5 font-display text-2xl font-semibold">{feature.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-400">{feature.copy}</p>
+                  <Icon className="h-6 w-6 text-brand-gold" />
+                  <h3 className="mt-5 font-display text-2xl font-semibold text-[color:var(--text-primary)]">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-[color:var(--text-secondary)]">{feature.copy}</p>
                 </Card>
               </motion.div>
             );

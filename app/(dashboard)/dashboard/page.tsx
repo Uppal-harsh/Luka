@@ -19,7 +19,7 @@ export default function DashboardPage() {
       <div className="grid gap-4 md:grid-cols-3">
         {stats.map((stat) => (
           <Card key={stat.label}>
-            <p className="text-sm text-slate-400">{stat.label}</p>
+            <p className="text-sm text-[color:var(--text-secondary)]">{stat.label}</p>
             <div className="mt-3 text-4xl font-semibold">{stat.value}</div>
           </Card>
         ))}
@@ -28,7 +28,7 @@ export default function DashboardPage() {
       <div className="mt-8">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <p className="text-sm uppercase tracking-[0.25em] text-violet-200/70">Recent apps</p>
+            <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Recent apps</p>
             <h1 className="mt-2 font-display text-3xl font-semibold">Builds in progress</h1>
           </div>
         </div>
@@ -39,11 +39,11 @@ export default function DashboardPage() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="font-display text-2xl font-semibold">{app.name}</h2>
-                  <p className="mt-2 text-sm text-slate-400">{app.description}</p>
+                  <p className="mt-2 text-sm text-[color:var(--text-secondary)]">{app.description}</p>
                 </div>
                 <Badge variant={app.status}>{app.status}</Badge>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-slate-300">
+              <div className="rounded-2xl border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface-hover)] px-4 py-3 text-sm text-[color:var(--text-secondary)]">
                 Preview, validate, and export in one flow.
               </div>
             </Card>

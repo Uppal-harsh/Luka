@@ -1,4 +1,7 @@
+'use client';
+
 import Link from "next/link";
+import type { Route } from "next";
 import { cn } from "@/lib/utils";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
@@ -7,10 +10,11 @@ type Size = "sm" | "md" | "lg";
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white shadow-glow-violet hover:opacity-95",
-  ghost: "bg-transparent text-slate-200 hover:bg-white/5",
+    "bg-brand-gold text-black shadow-glow-gold hover:brightness-110",
+  ghost: "bg-transparent text-[color:var(--text-primary)] hover:bg-[color:var(--bg-surface-hover)]",
   danger: "bg-red-500/90 text-white hover:bg-red-500",
-  outline: "border border-white/10 bg-white/[0.02] text-slate-100 hover:border-violet-400/50 hover:bg-white/5"
+  outline:
+    "border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] text-[color:var(--text-primary)] hover:border-brand-gold/50 hover:bg-[color:var(--bg-surface-hover)]"
 };
 
 const sizeStyles: Record<Size, string> = {
@@ -22,7 +26,7 @@ const sizeStyles: Record<Size, string> = {
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant;
   size?: Size;
-  href?: string;
+  href?: Route;
   children: ReactNode;
 };
 
@@ -35,7 +39,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500/50 disabled:pointer-events-none disabled:opacity-60",
+    "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 disabled:pointer-events-none disabled:opacity-60",
     variantStyles[variant],
     sizeStyles[size],
     className

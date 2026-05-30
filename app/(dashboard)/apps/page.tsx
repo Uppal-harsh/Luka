@@ -13,7 +13,7 @@ export default function AppsPage() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm uppercase tracking-[0.25em] text-violet-200/70">Apps</p>
+          <p className="text-sm uppercase tracking-[0.25em] text-brand-gold/70">Apps</p>
           <h1 className="mt-2 font-display text-3xl font-semibold">All generated apps</h1>
         </div>
         <Button href="/apps/new">New app</Button>
@@ -26,7 +26,7 @@ export default function AppsPage() {
               <h2 className="font-display text-2xl font-semibold">{app.name}</h2>
               <Badge variant={app.status}>{app.status}</Badge>
             </div>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-[color:var(--text-secondary)]">
               This is the starter index for the app catalogue. The renderer and config editor will plug in here.
             </p>
           </Card>

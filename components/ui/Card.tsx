@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes, ReactNode } from "react";
 
@@ -10,8 +12,8 @@ export function Card({ className, glow = false, children, ...props }: CardProps)
   return (
     <div
       className={cn(
-        "glass rounded-3xl p-6 text-slate-100 shadow-card",
-        glow && "shadow-glow-violet",
+        "glass rounded-3xl p-6 text-[color:var(--text-primary)] shadow-card",
+        glow && "shadow-glow-gold",
         className
       )}
       {...props}
