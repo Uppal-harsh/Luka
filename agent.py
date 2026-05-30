@@ -28,6 +28,10 @@ from urllib.request import Request, urlopen
 
 OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_MODEL = "openrouter/free"
+FALLBACK_MODELS = [
+    "openai/gpt-oss-120b:free",
+    "openai/gpt-oss-20b:free",
+]
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_ROOT = BASE_DIR / "generated-sites"
 DEFAULT_SITE_TITLE = "LUKA Generated Site"
@@ -183,40 +187,66 @@ def call_openrouter(
     site_url: str,
     app_title: str,
 ) -> str:
-    payload = {
-        "model": model,
-        "messages": build_messages(user_prompt),
-        "temperature": 0.7,
-        "max_tokens": max_tokens,
-        "response_format": {"type": "json_object"},
-    }
+    candidate_models = [model]
+    for fallback in FALLBACK_MODELS:
+        if fallback not in candidate_models:
+            candidate_models.append(fallback)
 
-    request = Request(
-        OPENROUTER_CHAT_URL,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": site_url,
-            "X-Title": app_title,
-        },
-        method="POST",
-    )
+    last_error: Exception | None = None
 
-    try:
-        with urlopen(request, timeout=120) as response:
-            raw = response.read().decode("utf-8")
-    except HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace") if exc.fp else ""
-        raise RuntimeError(f"OpenRouter request failed ({exc.code}): {body or exc.reason}") from exc
-    except URLError as exc:
-        raise RuntimeError(f"OpenRouter request failed: {exc.reason}") from exc
+    for candidate_model in candidate_models:
+        payload = {
+            "model": candidate_model,
+            "messages": build_messages(user_prompt),
+            "temperature": 0.7,
+            "max_tokens": max_tokens,
+            "response_format": {"type": "json_object"},
+        }
 
-    data = json.loads(raw)
-    try:
-        return data["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError) as exc:
-        raise RuntimeError(f"Unexpected OpenRouter response shape: {raw[:1000]}") from exc
+        request = Request(
+            OPENROUTER_CHAT_URL,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "HTTP-Referer": site_url,
+                "X-Title": app_title,
+            },
+            method="POST",
+        )
+
+        try:
+            with urlopen(request, timeout=120) as response:
+                raw = response.read().decode("utf-8")
+        except HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace") if exc.fp else ""
+            error_text = body or exc.reason or "Unknown OpenRouter error"
+
+            if exc.code == 404 and "model not found" in error_text.lower():
+                last_error = RuntimeError(
+                    f"{candidate_model} was unavailable: {error_text}"
+                )
+                continue
+
+            raise RuntimeError(
+                f"OpenRouter request failed for {candidate_model} ({exc.code}): {error_text}"
+            ) from exc
+        except URLError as exc:
+            last_error = RuntimeError(f"OpenRouter request failed for {candidate_model}: {exc.reason}")
+            continue
+
+        data = json.loads(raw)
+        try:
+            return data["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError(f"Unexpected OpenRouter response shape from {candidate_model}: {raw[:1000]}") from exc
+
+    if last_error is not None:
+        raise RuntimeError(
+            f"OpenRouter could not serve the request with the configured free models. Last error: {last_error}"
+        ) from last_error
+
+    raise RuntimeError("OpenRouter could not serve the request.")
 
 
 def strip_code_fences(text: str) -> str:
