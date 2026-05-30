@@ -7,12 +7,13 @@ function normalizeUrl(value: string | undefined | null) {
 }
 
 export function getAppOrigin(fallbackOrigin?: string) {
+  const siteUrl = normalizeUrl(process.env.NEXT_PUBLIC_SITE_URL) ?? normalizeUrl(process.env.NEXT_PUBLIC_APP_URL);
+
   if (typeof window !== "undefined") {
-    return normalizeUrl(process.env.NEXT_PUBLIC_APP_URL) ?? fallbackOrigin ?? window.location.origin;
+    return siteUrl ?? fallbackOrigin ?? window.location.origin;
   }
 
-  const explicit = normalizeUrl(process.env.NEXT_PUBLIC_APP_URL);
-  if (explicit) return explicit;
+  if (siteUrl) return siteUrl;
 
   const vercelUrl = normalizeUrl(process.env.VERCEL_URL);
   if (vercelUrl) return `https://${vercelUrl}`;

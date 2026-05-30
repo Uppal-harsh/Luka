@@ -66,7 +66,7 @@ export function GoogleSignInButton({
       }
 
       const supabase = createClient();
-      const redirectTo = buildAppUrl(`/auth/callback?next=${encodeURIComponent(next)}`, window.location.origin);
+      const redirectTo = buildAppUrl(`/auth/callback?next=${encodeURIComponent(next)}`);
 
       const { error: oauthError } = await supabase.auth.signInWithOAuth({
         provider: "google",
