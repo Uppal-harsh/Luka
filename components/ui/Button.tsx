@@ -10,7 +10,7 @@ type Size = "sm" | "md" | "lg";
 
 const variantStyles: Record<Variant, string> = {
   primary:
-    "bg-brand-gold text-black shadow-glow-gold hover:brightness-110",
+    "bg-brand-gold text-white shadow-[0_14px_28px_rgba(13,13,13,0.14)] hover:brightness-110 dark:text-black dark:shadow-glow-gold",
   ghost: "bg-transparent text-[color:var(--text-primary)] hover:bg-[color:var(--bg-surface-hover)]",
   danger: "bg-red-500/90 text-white hover:bg-red-500",
   outline:

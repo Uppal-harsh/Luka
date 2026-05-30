@@ -4,7 +4,7 @@
   "description": "Cosmic AI app generator platform.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#CCAA4B",
+  "background_color": "#f2f2f2",
+  "theme_color": "#0D0D0D",
   "icons": []
 }

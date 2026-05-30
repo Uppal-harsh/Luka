@@ -239,6 +239,35 @@ This scaffold uses a dark, premium visual language with:
 - Shared motion variants in `lib/motion.ts`
 - Google fonts loaded in `app/layout.tsx`
 
+## OpenRouter Agent
+
+The local generation entrypoint lives in `agent.py`.
+
+### Environment
+
+Set these values in `.env.local`:
+
+- `OPENROUTER_API_KEY`
+- `OPENROUTER_MODEL=openrouter/free`
+
+### Run
+
+```bash
+python agent.py "Build a premium landing page for a productivity app"
+```
+
+The script will:
+
+- call OpenRouter with the `openrouter/free` router by default
+- generate exactly three files
+- save them under `generated-sites/<project-name>/`
+
+Each generated site contains:
+
+- `index.html`
+- `styles.css`
+- `script.js`
+
 ## Current Status
 
 The repository is currently a scaffold, not a finished product.

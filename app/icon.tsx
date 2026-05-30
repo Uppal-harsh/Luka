@@ -12,7 +12,7 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#000000"
+          background: "#f2f2f2"
         }}
       >
         <div
@@ -20,11 +20,11 @@ export default function Icon() {
             width: 96,
             height: 96,
             borderRadius: 28,
-            background: "linear-gradient(145deg, #CCAA4B, #585858)",
+            background: "linear-gradient(145deg, #0d0d0d, #585858)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 16px 40px rgba(124, 58, 237, 0.35)"
+            boxShadow: "0 16px 40px rgba(13, 13, 13, 0.18)"
           }}
         >
           <div

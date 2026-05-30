@@ -11,7 +11,7 @@ module.exports = {
       },
       colors: {
         brand: {
-          gold: "#CCAA4B",
+          gold: "rgb(var(--brand-accent-rgb) / <alpha-value>)",
           navy: "#262933",
           gray: "#585858",
           black: "#000000",

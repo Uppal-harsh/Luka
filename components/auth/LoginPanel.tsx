@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { getSupabaseConfig } from "@/lib/supabase/config";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -47,6 +48,20 @@ export function LoginPanel({
     try {
       setLoading(true);
       setError(null);
+      const config = getSupabaseConfig();
+
+      if (!config.isReady) {
+        throw new Error(
+          "Supabase is not configured yet. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY to .env.local, then restart the dev server."
+        );
+      }
+
+      if (!config.isLikelyValidKey) {
+        throw new Error(
+          "The Supabase public key loaded by the app does not look valid. Make sure NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY matches the key from your Supabase dashboard, then restart the dev server."
+        );
+      }
+
       const supabase = createClient();
       const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
 
@@ -61,10 +76,16 @@ export function LoginPanel({
       });
 
       if (oauthError) {
-        setError(oauthError.message);
+        if (/invalid api key/i.test(oauthError.message)) {
+          setError(
+            "Supabase rejected the public key. Check NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY in .env.local and restart the dev server."
+          );
+        } else {
+          setError(oauthError.message);
+        }
       }
-    } catch {
-      setError("Something went wrong starting Google sign in.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong starting Google sign in.");
     } finally {
       setLoading(false);
     }

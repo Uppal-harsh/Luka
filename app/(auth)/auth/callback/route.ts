@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { getSupabaseConfig } from "@/lib/supabase/config";
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -17,14 +18,14 @@ export async function GET(request: Request) {
 
   const response = NextResponse.redirect(new URL(safeNext, request.url));
   const cookieStore = await cookies();
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const { url: supabaseUrl, key: supabaseKey } = getSupabaseConfig();
 
   if (!supabaseUrl || !supabaseKey) {
     loginUrl.searchParams.set("error", "auth_failed");
-    loginUrl.searchParams.set("message", "Supabase environment variables are missing.");
+    loginUrl.searchParams.set(
+      "message",
+      "Supabase environment variables are missing. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY in .env.local."
+    );
     return NextResponse.redirect(loginUrl);
   }
 
