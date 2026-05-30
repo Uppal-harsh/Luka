@@ -33,9 +33,15 @@ function GoogleMark() {
   );
 }
 
-export function LoginPanel({ next = "/dashboard" }: { next?: string }) {
+export function LoginPanel({
+  next = "/dashboard",
+  initialError
+}: {
+  next?: string;
+  initialError?: string;
+}) {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(initialError ?? null);
 
   const handleGoogleSignIn = async () => {
     try {
