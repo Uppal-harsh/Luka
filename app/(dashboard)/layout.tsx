@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { LukaLogo } from "@/components/brand/LukaLogo";
+import { Button } from "@/components/ui/Button";
+import { ArrowRight, LogOut } from "lucide-react";
 import type { ReactNode } from "react";
 
 export default function DashboardLayout({
@@ -14,8 +16,18 @@ export default function DashboardLayout({
           <Link href="/" className="transition hover:opacity-90">
             <LukaLogo compact />
           </Link>
-          <div className="hidden rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] px-3 py-1.5 text-xs uppercase tracking-[0.24em] text-[color:var(--text-muted)] sm:block">
-            Workspace
+          <div className="flex items-center gap-3">
+            <Button href="/apps/new" size="sm">
+              Build
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+            <div className="hidden rounded-full border border-[color:var(--border-subtle)] bg-[color:var(--bg-surface)] px-3 py-1.5 text-xs uppercase tracking-[0.24em] text-[color:var(--text-muted)] sm:block">
+              Workspace
+            </div>
+            <Button href="/logout" size="sm" variant="outline" className="hidden sm:inline-flex">
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
           </div>
         </div>
       </header>

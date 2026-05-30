@@ -268,6 +268,24 @@ Each generated site contains:
 - `styles.css`
 - `script.js`
 
+### In-App Agent Workspace
+
+Open the dashboard route at:
+
+- `/apps/new`
+
+Paste a valid JSON config into the editor, then:
+
+- click `Run agent`
+- or press `Ctrl+Enter`
+
+The page will:
+
+- run `agent.py` on the server
+- save the generated project locally
+- show the `index.html`, `styles.css`, and `script.js` output inline
+- render a live preview on the same page
+
 ## Current Status
 
 The repository is currently a scaffold, not a finished product.

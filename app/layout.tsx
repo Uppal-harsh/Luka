@@ -3,6 +3,7 @@ import { Bricolage_Grotesque, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { RouteTransition } from "@/components/providers/RouteTransition";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -33,7 +34,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${display.variable} ${body.variable} ${mono.variable} font-body`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <RouteTransition>{children}</RouteTransition>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -8,7 +8,6 @@ import {
   ArrowRight,
   CircleAlert,
   FileCode2,
-  FileText,
   FolderOpen,
   Loader2,
   Play,
@@ -47,6 +46,46 @@ const defaultJson = JSON.stringify(
   2
 );
 
+const randomProjectIdeas = [
+  {
+    projectName: "Pulse Studio",
+    objective: "Build a modern analytics workspace for product teams.",
+    audience: "Growth teams and founders",
+    style: "Sharp, minimal, high-contrast, and premium",
+    sections: ["Hero", "Metrics", "Feature grid", "Insights panel", "Footer"],
+    cta: { label: "Open dashboard", href: "#" }
+  },
+  {
+    projectName: "Northstar CRM",
+    objective: "Design a clean CRM landing page with strong calls to action.",
+    audience: "Sales operators and small teams",
+    style: "Editorial, structured, and professional",
+    sections: ["Hero", "Pricing", "Use cases", "Testimonials", "Footer"],
+    cta: { label: "Start free", href: "#" }
+  },
+  {
+    projectName: "Vertex Ops",
+    objective: "Create an operations command center for internal workflows.",
+    audience: "Operations managers",
+    style: "Dark, calm, and enterprise-ready",
+    sections: ["Overview", "Workflow cards", "Status timeline", "Audit trail", "Footer"],
+    cta: { label: "Launch workspace", href: "#" }
+  },
+  {
+    projectName: "Nimbus Board",
+    objective: "Generate a lightweight project board with task tracking.",
+    audience: "Product teams",
+    style: "Clean, airy, and dashboard-like",
+    sections: ["Hero", "Kanban preview", "Automation strip", "Team notes", "Footer"],
+    cta: { label: "Create board", href: "#" }
+  }
+] as const;
+
+function makeRandomProjectJson() {
+  const idea = randomProjectIdeas[Math.floor(Math.random() * randomProjectIdeas.length)];
+  return JSON.stringify(idea, null, 2);
+}
+
 function buildPreviewDoc(indexHtml: string, stylesCss: string, scriptJs: string) {
   const safeCss = stylesCss.replace(/<\/style>/gi, "<\\/style>");
   const safeJs = scriptJs.replace(/<\/script>/gi, "<\\/script>");
@@ -80,6 +119,7 @@ export function AgentWorkspace() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AgentResult | null>(null);
   const [activeFile, setActiveFile] = useState<keyof AgentResult["files"]>("index.html");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const previewDoc = useMemo(() => {
     if (!result) return "";
@@ -120,6 +160,21 @@ export function AgentWorkspace() {
       setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleJsonUpload = async (file: File | null) => {
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      setJsonText(JSON.stringify(parsed, null, 2));
+      setError(null);
+      setResult(null);
+      setActiveFile("index.html");
+    } catch {
+      setError("Please upload a valid JSON file.");
     }
   };
 
@@ -173,19 +228,39 @@ export function AgentWorkspace() {
             <Button
               type="button"
               variant="outline"
-              onClick={() => {
-                setJsonText(defaultJson);
-                setResult(null);
-                setError(null);
-                setActiveFile("index.html");
-              }}
+              onClick={() => fileInputRef.current?.click()}
+              disabled={loading}
             >
-              Reset JSON
+              <FileCode2 className="h-4 w-4" />
+              Add JSON
             </Button>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setJsonText(makeRandomProjectJson());
+                  setResult(null);
+                  setError(null);
+                  setActiveFile("index.html");
+                }}
+              >
+              Reset JSON
+              </Button>
             <span className="text-sm text-[color:var(--text-muted)]">
               Tip: press <span className="font-medium text-[color:var(--text-primary)]">Ctrl+Enter</span> to generate.
             </span>
           </div>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json,application/json,text/json"
+            className="hidden"
+            onChange={(event) => {
+              void handleJsonUpload(event.target.files?.[0] ?? null);
+              event.currentTarget.value = "";
+            }}
+          />
 
           {error ? (
             <div className="flex items-start gap-3 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-300">

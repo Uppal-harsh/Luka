@@ -41,8 +41,8 @@ export function NavBar() {
           <Button href="/docs" size="sm" variant="outline" className="hidden sm:inline-flex">
             Docs
           </Button>
-          <Button href="/login" size="sm">
-            Launch
+          <Button href="/apps/new" size="sm">
+            Build
             <ArrowRight className="h-4 w-4" />
           </Button>
         </div>

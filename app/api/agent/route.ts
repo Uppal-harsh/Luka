@@ -21,13 +21,18 @@ function runPythonAgent(input: string): Promise<{ stdout: string; stderr: string
   const scriptPath = path.join(cwd, "agent.py");
   const commands: Array<[string, string[]]> = [
     [process.env.PYTHON || "python", [scriptPath]],
+    ["python3", [scriptPath]],
     ["py", ["-3", scriptPath]]
   ];
 
   const execute = (
     command: string,
     args: string[]
-  ): Promise<{ stdout: string; stderr: string }> =>
+  ): Promise<
+    | { status: "ok"; stdout: string; stderr: string }
+    | { status: "missing" }
+    | { status: "failed"; error: Error }
+  > =>
     new Promise((resolve, reject) => {
       const child = spawn(command, args, {
         cwd,
@@ -46,16 +51,24 @@ function runPythonAgent(input: string): Promise<{ stdout: string; stderr: string
         stderr += chunk.toString();
       });
 
-      child.on("error", reject);
+      child.on("error", (error: NodeJS.ErrnoException) => {
+        if (error.code === "ENOENT") {
+          resolve({ status: "missing" });
+          return;
+        }
+
+        reject(error);
+      });
       child.on("close", (code) => {
         if (code === 0) {
-          resolve({ stdout, stderr });
+          resolve({ status: "ok", stdout, stderr });
         } else {
-          reject(
-            new Error(
+          resolve({
+            status: "failed",
+            error: new Error(
               `agent.py exited with code ${code ?? "unknown"}.\n${stderr || stdout || "No output."}`
             )
-          );
+          });
         }
       });
 
@@ -64,15 +77,27 @@ function runPythonAgent(input: string): Promise<{ stdout: string; stderr: string
     });
 
   return (async () => {
-    let lastError: unknown;
+    let missingCount = 0;
     for (const [command, args] of commands) {
-      try {
-        return await execute(command, args);
-      } catch (error) {
-        lastError = error;
+      const result = await execute(command, args);
+      if (result.status === "ok") {
+        return { stdout: result.stdout, stderr: result.stderr };
       }
+
+      if (result.status === "failed") {
+        throw result.error;
+      }
+
+      missingCount += 1;
     }
-    throw lastError instanceof Error ? lastError : new Error("Failed to launch agent.py.");
+
+    if (missingCount === commands.length) {
+      throw new Error(
+        "Could not find a Python runtime. Install Python or set the PYTHON environment variable to the full path of your interpreter."
+      );
+    }
+
+    throw new Error("Failed to launch agent.py.");
   })();
 }
 
